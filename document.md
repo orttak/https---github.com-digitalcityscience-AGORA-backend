@@ -13,5 +13,5 @@ docker run --name fastapi-cont -p 8083:8000 -it -e SHELL=/bin/bash -v /home/orta
   8- black -l . ile git e push lamadan once kodlari standarta sokkma - https://stackoverflow.com/questions/71180810/python-black-code-formatter-is-there-any-way-to-apply-automatic-black-formatti
 
 --- pazartesi
-git e push et
 su docker image guncelleme isini bak- commit ile hallederbilirz. scrip yaz. guncelleme cekersen gitsin curretn container dan image olustursun
+asds
