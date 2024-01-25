@@ -24,7 +24,8 @@ ENV CONDA_ENV=api \
     #when we delet below files with RUN rm  ./*yml ./*.toml ./*.lock , we have poetry problem. This command delete poetry env rule somehow.
     # I don't know the reaoson so we keep the file inside the container. We will check it later
     CONDA_ENV_FILE_NAME=environment.yml \
-    POETRY_ENV_FILE_NAME=pyproject.toml
+    POETRY_ENV_FILE_NAME=pyproject.toml\
+    WORKING_DIR=/home
 
 # All env vars that reference other env vars need to be in their own ENV block
 # Path to the python environment where the jupyter notebook packages are installed
@@ -111,7 +112,7 @@ RUN echo "Checking for Poetry 'pyproject.toml'..." \
     else \
         echo "No pyproject.toml found! *Initializing a new Poetry environment*"; \
     fi
-WORKDIR ${HOME}
+WORKDIR ${WORKING_DIR}
 ### FUTURE DEVELOPMENT ###
 #when we delet below files with RUN rm  ./*yml ./*.toml ./*.lock , we have poetry problem. This command delete poetry env rule somehow.
 # I don't know the reaoson so we keep the file inside the container. We will check it later
