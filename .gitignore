@@ -72,3 +72,10 @@ Pipfile.lock
 *.bash_history
 *.local
 *.python_history
+
+*.config
+*.cache
+*.bash_history
+*.bashrc
+*.local
+*.python_history

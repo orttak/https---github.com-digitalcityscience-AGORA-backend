@@ -83,8 +83,8 @@ RUN echo "Installing Mambaforge..." \
     #conda create -p conda-pkg.yaml -c conda-forge mamba conda-lock poetry='1.3'
 WORKDIR /mnt/${NB_USER}/installation/
 # Copy importan files for installation
-COPY ./*yml ./*.toml ./*.lock /mnt/${NB_USER}/installation/
-# -----------------------------------------------------------------------------------------------
+COPY ./*yml ./*.toml ./*.lock ./.config/* /mnt/${NB_USER}/installation/ 
+    # -----------------------------------------------------------------------------------------------
 # # Check for conda-lock.yml or environment.yml
 RUN if [ -s "conda-lock.yml" ]; then \
         echo "Running command for conda-lock"; \
