@@ -33,8 +33,7 @@ def create_user(user: user_login.UserCreate, db: Session = Depends(get_db)):
 
 @router.get("/{id}", response_model=user_login.UserOut)
 def get_user(
-    id: int,
-    db: Session = Depends(get_db),
+    id: int, db: Session = Depends(get_db),
 ):
     user = db.query(user_model.User).filter(user_model.User.id == id).first()
     if not user:
