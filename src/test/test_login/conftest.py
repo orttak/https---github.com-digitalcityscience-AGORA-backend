@@ -1,5 +1,7 @@
 from fastapi.testclient import TestClient
 import pytest
+from jose import JWTError, jwt
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -7,9 +9,8 @@ from app.main import app
 from app.auth.config import settings
 from app.auth.database import get_db
 from app.auth.database import Base
-from app.auth.oauth2 import create_access_token
+from app.auth.oauth2 import create_access_token, create_refresh_token
 
-# 15.45 de kaldik
 """
 Define pytest fixture in this file.
 All pytest modules can reach below functions without having to import them.
@@ -60,8 +61,8 @@ def client(session):
 
 @pytest.fixture()
 def test_user(client):
-    user_data = {"email": "user1@user.com", "password": "user1"}
-    response = client.post("/users/", json=user_data)
+    user_data = {"email": "user1_test@user.com", "password": "user1"}
+    response = client.post("/auth/register/", json=user_data)
     assert response.status_code == 201
     new_data = response.json()
     new_data["password"] = user_data["password"]
@@ -70,8 +71,8 @@ def test_user(client):
 
 @pytest.fixture()
 def test_user2(client):
-    user_data = {"email": "user2@user.com", "password": "user2"}
-    response = client.post("/users/", json=user_data)
+    user_data = {"email": "user2_test@user.com", "password": "user2"}
+    response = client.post("/auth/register", json=user_data)
     assert response.status_code == 201
     new_data = response.json()
     new_data["password"] = user_data["password"]
@@ -79,19 +80,22 @@ def test_user2(client):
 
 
 # we create this token for testing purposes
-
+@pytest.fixture()
+def tokens(test_user):
+    user_id = test_user["id"]
+    access_token = create_access_token({"user_id": user_id})
+    refresh_token = create_refresh_token(data={"user_id": f"{user_id}_30"})
+    # payload = jwt.decode(refresh_token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+    # print("payload",payload)
+    return access_token, refresh_token
 
 @pytest.fixture()
-def token(test_user):
-    return create_access_token({"user_id": test_user["id"]})
-
-
-# using this token we update our headers and test our api
-# Shoud we change the scope of this fixture because we have many app which are use authorized client
-# so I think we need to change scope to module. Ask to Zafer
-
-
-@pytest.fixture()
-def authorized_client(client, token):
-    client.headers["Authorization"] = f"Bearer {token}"
+def authorized_client(client, tokens):
+    access_token, _ = tokens
+    client.headers["Authorization"] = f"Bearer {access_token}"
     return client
+
+@pytest.fixture()
+def refresh_token(tokens):
+    _, refresh_token = tokens
+    return refresh_token
