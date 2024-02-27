@@ -1,5 +1,6 @@
 # hash the user password
 from passlib.context import CryptContext
+
 # what is the default hashing algorithm
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

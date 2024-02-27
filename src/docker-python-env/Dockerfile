@@ -114,6 +114,6 @@ RUN echo "Checking for Poetry 'pyproject.toml'..." \
     fi
 WORKDIR ${WORKING_DIR}
 ### FUTURE DEVELOPMENT ###
-#when we delet below files with RUN rm  ./*yml ./*.toml ./*.lock , we have poetry problem. This command delete poetry env rule somehow.
+#when we delete below files with RUN rm  ./*yml ./*.toml ./*.lock , we have poetry problem. This command delete poetry env rule somehow.
 # I don't know the reaoson so we keep the file inside the container. We will check it later
 # RUN rm  ./*yml ./*.toml ./*.lock 

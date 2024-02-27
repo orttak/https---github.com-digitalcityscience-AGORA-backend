@@ -6,11 +6,11 @@ docker run --name fastapi-cont -p 8083:8000 -it -e SHELL=/bin/bash -v /home/orta
 
 - kutuphane kurulumu yaptiktan sonra docker compose down yapinca kutuphane container icinden gidiyor. kutuphabne ekleyince --build ile ayaga kaldirmak gerekiyor
 - docker commit ile son container dan image olsuturup surekli update kalabilyioruz
-  3- connection pool ile db baglantilarini optimize edelim ve DB de ilk okumamizi yapalim
-  4- login ve register endpointlerini yazalim ---- yazdik
-  5- login ve register endpointlerini test edelim ... yazdik
-  6- ligfinder ednpointleri ile test yapalim
-  7- geo sqlalchemy ile db deki verileri cekelim. bakalim fonskiyonlarimiz calisiyor mu?|
+- login ve register endpointlerini yazalim >>> yazdik
+- login ve register endpointlerini test edelim >>> yazdik
+- connection pool ile db baglantilarini optimize edelim ve DB de ilk okumamizi yapalim > yaptik
+- ligfinder ednpointleri ile test yapalim
+- geo sqlalchemy ile db deki verileri cekelim. bakalim fonskiyonlarimiz calisiyor mu?|
   - sqlalchemy ile direk sql de kosturabiliyorz.
   - Hepsini geoslqlalchemy donusturcez diye bir sey yok. Olsa guzel olabilir
   - veri okumalari geoserver vb seyelr ile yapacaz. Ne kadarlik bir yuk olacak bilemiyoruz.

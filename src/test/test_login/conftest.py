@@ -89,11 +89,13 @@ def tokens(test_user):
     # print("payload",payload)
     return access_token, refresh_token
 
+
 @pytest.fixture()
 def authorized_client(client, tokens):
     access_token, _ = tokens
     client.headers["Authorization"] = f"Bearer {access_token}"
     return client
+
 
 @pytest.fixture()
 def refresh_token(tokens):

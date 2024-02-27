@@ -29,12 +29,14 @@ def create_access_token(data: dict):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+
 def create_refresh_token(data: dict):
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
 
 def verify_access_token(token: str, credential_exception):
     try:
@@ -49,13 +51,14 @@ def verify_access_token(token: str, credential_exception):
 
     return token_data
 
+
 def verify_refresh_token(token: str, credential_exception):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         # print("payload",payload)
         # "30" keyword fo refreshing token
-        if "30" in str(payload.get('user_id')).split("_"):
-            id = str(payload.get('user_id')).split("_")[0]
+        if "30" in str(payload.get("user_id")).split("_"):
+            id = str(payload.get("user_id")).split("_")[0]
         else:
             raise credential_exception
         if id is None:
@@ -65,7 +68,11 @@ def verify_refresh_token(token: str, credential_exception):
     except JWTError:
         raise Exception("Invalid token")
 
-    return {"access_token": access_token,"refresh_token":token, "token_type": "bearer"}
+    return {
+        "access_token": access_token,
+        "refresh_token": token,
+        "token_type": "bearer",
+    }
 
 
 def get_current_user(
@@ -76,7 +83,7 @@ def get_current_user(
         detail=f"Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-
+    print("token", token)
     token = verify_access_token(token, credentials_exception)
 
     user = db.query(user_model.User).filter(user_model.User.id == token.id).first()
